@@ -36,7 +36,7 @@ function findCutPoints(canvas, ctx, leastTall) {
 }
 
 // 將圖片切割並打包成zip檔案
-async function cutAndZipImage(canvas, cutPoints, zipFilename) {
+async function cutAndZipImage(canvas, cutPoints, zipFilename,startpage) {
     const zip = new JSZip();
 
     for (let i = 1; i < cutPoints.length; i++) {
@@ -50,7 +50,7 @@ async function cutAndZipImage(canvas, cutPoints, zipFilename) {
         cropCtx.drawImage(canvas, 0, cutPoints[i - 1], width, height, 0, 0, width, height);
 
         const blob = await new Promise(resolve => cropCanvas.toBlob(resolve));
-        zip.file(`image_${i}.png`, blob);
+        zip.file(`image_${i+startpage-1}.png`, blob);
     }
 
     // 生成ZIP檔案並提供下載鏈接
@@ -66,7 +66,7 @@ async function cutAndZipImage(canvas, cutPoints, zipFilename) {
 
 
 // 處理圖片的入口函數
-async function processImage(file, leastTall, zipFilename) {
+async function processImage(file, leastTall, zipFilename,startpage) {
     const reader = new FileReader();
     reader.onload = async function(event) {
         const img = new Image();
@@ -90,7 +90,7 @@ async function processImage(file, leastTall, zipFilename) {
 
             const cutPoints = findCutPoints(grayCanvas, grayCtx, leastTall);
             console.log(cutPoints);
-            await cutAndZipImage(canvas, cutPoints, zipFilename);
+            await cutAndZipImage(canvas, cutPoints, zipFilename,startpage);
         };
         img.src = event.target.result;
     };

@@ -6,24 +6,41 @@
     <title>圖片處理和打包</title>
     <script src="script.js"></script>
     <script src="jszip/dist/jszip.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="cut.css">
 </head>
 
 <body>
-
+    <input type="number" id="leasthigh" placeholder="每一頁至少多長(預設2500)">
+    <input type="number" id="pageShift" placeholder="起始頁碼(預設1)">
+    <!-- <input type="number" placeholder="輸入數值3"> -->
+    <br>
     <a id="downloadLink" style="display: none;">下載Zip檔案</a>
     <input type="file" id="imageInput" accept="image/*">
     <button onclick="handleFile()">處理圖片</button>
 
-    
-    
-    <script>function handleFile() {
-        console.log("handleFile");
+
+
+    <script>
+        function handleFile() {
+            console.log("handleFile");
             const fileInput = document.getElementById('imageInput');
+            const leasthigh = document.getElementById('leasthigh');
+            const pageShift = document.getElementById('pageShift');
+
+            // 將值轉換為數字，如果是空的則使用預設值
+            const leasthighValue = leasthigh.value ? parseInt(leasthigh.value, 10) : 2500;
+            const pageShiftValue = pageShift.value ? parseInt(pageShift.value, 10) : 1;
+
+            console.log(leasthighValue, pageShiftValue);
+
             if (fileInput.files && fileInput.files[0]) {
-                processImage(fileInput.files[0], 2500, 'output.zip');
+                // 使用轉換後的數字值
+                processImage(fileInput.files[0], leasthighValue, 'output.zip', pageShiftValue);
             }
         }
     </script>
+
+
 </body>
 
 </html>
