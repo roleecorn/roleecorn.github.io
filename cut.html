@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <title>圖片處理和打包</title>
+    <script src="script.js"></script>
+    <script src="jszip/dist/jszip.min.js"></script>
+</head>
+
+<body>
+
+    <a id="downloadLink" style="display: none;">下載Zip檔案</a>
+    <input type="file" id="imageInput" accept="image/*">
+    <button onclick="handleFile()">處理圖片</button>
+
+    
+    
+    <script>function handleFile() {
+        console.log("handleFile");
+            const fileInput = document.getElementById('imageInput');
+            if (fileInput.files && fileInput.files[0]) {
+                processImage(fileInput.files[0], 2500, 'output.zip');
+            }
+        }
+    </script>
+</body>
+
+</html>
