@@ -50,7 +50,8 @@ async function cutAndZipImage(canvas, cutPoints, zipFilename,startpage) {
         cropCtx.drawImage(canvas, 0, cutPoints[i - 1], width, height, 0, 0, width, height);
 
         const blob = await new Promise(resolve => cropCanvas.toBlob(resolve));
-        zip.file(`image_${i+startpage-1}.png`, blob);
+        // zip.file(`image_${i+startpage-1}.png`, blob);
+        zip.file(`${(i + startpage - 1).toString().padStart(3, '0')}.png`, blob);
     }
 
     // 生成ZIP檔案並提供下載鏈接
